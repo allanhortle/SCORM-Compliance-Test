@@ -21,6 +21,8 @@
   "homepage": "https://github.com/allanhortle/SCORM-Compliance-Test",
   "devDependencies": {
     "grunt": "^0.4.5",
+    "grunt-cssflow": "^0.1.5",
+    "jit-grunt": "^0.8.0",
     "lodash": "^2.4.1",
     "react": "^0.11.2",
     "webpack": "^1.4.5"
