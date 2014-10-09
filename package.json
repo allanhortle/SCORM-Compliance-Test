@@ -1,0 +1,28 @@
+{
+  "name": "SCORM-Compliance-Test",
+  "version": "0.0.0",
+  "description": "Test eLearning SCORM compliance locally and in isolation.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/allanhortle/SCORM-Compliance-Test.git"
+  },
+  "keywords": [
+    "SCORM"
+  ],
+  "author": "Allan Hortle",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/allanhortle/SCORM-Compliance-Test/issues"
+  },
+  "homepage": "https://github.com/allanhortle/SCORM-Compliance-Test",
+  "devDependencies": {
+    "grunt": "^0.4.5",
+    "lodash": "^2.4.1",
+    "react": "^0.11.2",
+    "webpack": "^1.4.5"
+  }
+}
