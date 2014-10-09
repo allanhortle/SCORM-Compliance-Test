@@ -1,8 +1,7 @@
-/*global module,require jshint -W097 */
+/*global module,require *//* jshint -W097 */
 'use strict';
 module.exports = function (grunt) {
 
-    require('time-grunt')(grunt);
     require('jit-grunt')(grunt);
 
     var webpack = require('webpack');
@@ -52,21 +51,9 @@ module.exports = function (grunt) {
                 files: ['trc/**/*.js', 'trc/**/*.jsx', 'node_modules/stampy/**/*.jsx'],
                 tasks: ['webpack:dev']
             },
-            templates: {
-                files: ['trc/src/templates/**/*.hbs'],
-                tasks: ['handlebars', 'webpack:dev'],
-            },
             sass: {
                 files: ['<%= config.scss %>/**/*.scss'],
                 tasks: ['styleguide', 'css'],
-            },
-            jsp: {
-                files: ['../../WEB-INF/views/**/*.jsp'],
-                tasks: ['css']
-            },
-            styleguide: {
-                files: ['../kss/**/*', '<%= config.scss %>/**/*.md'],
-                tasks: ['styleguide']
             }
         },
 
