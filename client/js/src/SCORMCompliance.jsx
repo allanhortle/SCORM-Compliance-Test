@@ -4,16 +4,12 @@ var _ = require('lodash');
 var Grid = require('stampy/components/Grid');
 var Col = require('stampy/components/Col');
 var Input = require('stampy/components/Input');
+var Textarea = require('stampy/components/Textarea');
 var Button = require('stampy/components/Button');
 
 var SCORM = require('./utils/SCORM.js');
 var SCORMDefaults = require('./utils/SCORMDefaults.js');
 var configVars = require('../../../config.js');
-
-var defaultVars = _.defaults(configVars, SCORMDefaults);
-
-
-
 
 var SCORMCompliance = React.createClass({
     displayName: 'SCORMCompliance',
@@ -21,10 +17,14 @@ var SCORMCompliance = React.createClass({
         require('stampy/mixins/FormMixin')
     ],
     getDefaultProps: function () {
+        var data = _.defaults(configVars, SCORMDefaults);
         return {
-            formData: _.defaults(defaultVars, {
-                module: 'demo'
-            })
+            badData: false,
+            formData: {
+                module: 'demo',
+                scorm_text: data,
+                scorm_data: data
+            }
         };
     },
     getInitialState: function () {
@@ -36,9 +36,11 @@ var SCORMCompliance = React.createClass({
     },
     componentWillMount: function () {
         SCORM.initialize();
-        console.log(this.state.formData);
-        SCORM.set(this.state.formData);
+        SCORM.set(this.state.formData.scorm_data);
         SCORM.message = this.log;
+    },
+    componentWillUpdate: function (nextProps, nextState) {
+        SCORM.set(nextState.formData.scorm_data);  
     },
     log: function (a,b,data) {
         var color = b || 'white';
@@ -57,12 +59,38 @@ var SCORMCompliance = React.createClass({
     reloadModule: function () {
         this.refs.iframe.getDOMNode().contentWindow.location.reload();
     },
+    onTextAreaChange: function (e, data) {
+        this.FormMixin_onFormChange(e, {
+            key: data.key, 
+            value: _data
+        });
+        try {
+            var _data = JSON.parse(data.value);
+            this.setState({
+                formData: {
+                    scorm_data: _data,
+                },
+                badData: false
+            });
+            
+        } catch (error){
+            this.setState({badData: true});
+        }
+
+    },
     render: function () {
         var formData = this.state.formData;
         var url;
         if(this.state.module) {
             url = (this.state.module.indexOf('http') != -1) ? this.state.module : "__MODULES__/" + this.state.module;            
         }
+        var buttons = (
+            <div>
+                <Button onClick={this.loadModule}>Load</Button>
+                <Button modifier="grey" onClick={this.reloadModule}>Refresh</Button>
+            </div>
+        );
+        var button = (this.state.badData) ? <Button onClick={this.loadModule} disabled>Bad Data</Button> : buttons;
 
         return (
             <div className="SCORMCompliance">
@@ -70,24 +98,20 @@ var SCORMCompliance = React.createClass({
                     <iframe ref="iframe" src={url}></iframe>
                 </div>
                 <div className="content padding2">
-                    <p>Module URL</p>
                     <div className="row">
+                        <label>Module URL</label>
                         <Input name="module" onChange={this.FormMixin_onFormChange} value={formData['module']}/>
-                        <Button onClick={this.loadModule}>Load</Button>
-                        <Button modifier="grey" onClick={this.reloadModule}>Refresh</Button>
+                        
+                        <label>User Data</label>
+                        <Textarea name="scorm_text" onChange={this.onTextAreaChange} value={JSON.stringify(formData.scorm_text, null, 2)} height={240}></Textarea>
                     </div>
 
+                        
 
-                    <h2>User Data</h2>
+                    {button}
+                    
 
-                    <label>Learner Name</label>
-                    <Input name="cmi.learner_name" onChange={this.FormMixin_onFormChange} value={formData['cmi.learner_name']}/>
 
-                    <label>Learner ID</label>
-                    <Input name="cmi.learner_id" onChange={this.FormMixin_onFormChange} value={formData['cmi.learner_id']}/>
-
-                    <label>Completion Status</label>
-                    <Input name="cmi.completion_status" onChange={this.FormMixin_onFormChange} value={formData['cmi.completion_status']}/>
 
                 </div>
                 <pre className="console" ref="console">{this.renderLog(this.state.log)}</pre>

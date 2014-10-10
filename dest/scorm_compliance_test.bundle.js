@@ -9,8 +9,7 @@ webpackJsonp([1],[
 
 /***/ },
 /* 1 */,
-/* 2 */,
-/* 3 */
+/* 2 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1);
@@ -83,6 +82,7 @@ webpackJsonp([1],[
 	module.exports = ClassMixin;
 
 /***/ },
+/* 3 */,
 /* 4 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -130,7 +130,7 @@ webpackJsonp([1],[
 /* 5 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var _ = __webpack_require__(2);
+	var _ = __webpack_require__(3);
 
 	var storedData = {};
 	var _data = {};
@@ -308,31 +308,31 @@ webpackJsonp([1],[
 
 	/** @jsx React.DOM */
 	var React = __webpack_require__(1);
-	var _ = __webpack_require__(2);
+	var _ = __webpack_require__(3);
 	var Grid = __webpack_require__(11);
 	var Col = __webpack_require__(10);
 	var Input = __webpack_require__(12);
+	var Textarea = __webpack_require__(14);
 	var Button = __webpack_require__(9);
 
 	var SCORM = __webpack_require__(5);
 	var SCORMDefaults = __webpack_require__(6);
 	var configVars = __webpack_require__(7);
 
-	var defaultVars = _.defaults(configVars, SCORMDefaults);
-
-
-
-
 	var SCORMCompliance = React.createClass({
 	    displayName: 'SCORMCompliance',
 	    mixins: [
-	        __webpack_require__(14)
+	        __webpack_require__(15)
 	    ],
 	    getDefaultProps: function () {
+	        var data = _.defaults(configVars, SCORMDefaults);
 	        return {
-	            formData: _.defaults(defaultVars, {
-	                module: 'demo'
-	            })
+	            badData: false,
+	            formData: {
+	                module: 'demo',
+	                scorm_text: data,
+	                scorm_data: data
+	            }
 	        };
 	    },
 	    getInitialState: function () {
@@ -344,9 +344,11 @@ webpackJsonp([1],[
 	    },
 	    componentWillMount: function () {
 	        SCORM.initialize();
-	        console.log(this.state.formData);
-	        SCORM.set(this.state.formData);
+	        SCORM.set(this.state.formData.scorm_data);
 	        SCORM.message = this.log;
+	    },
+	    componentWillUpdate: function (nextProps, nextState) {
+	        SCORM.set(nextState.formData.scorm_data);  
 	    },
 	    log: function (a,b,data) {
 	        var color = b || 'white';
@@ -365,12 +367,38 @@ webpackJsonp([1],[
 	    reloadModule: function () {
 	        this.refs.iframe.getDOMNode().contentWindow.location.reload();
 	    },
+	    onTextAreaChange: function (e, data) {
+	        this.FormMixin_onFormChange(e, {
+	            key: data.key, 
+	            value: _data
+	        });
+	        try {
+	            var _data = JSON.parse(data.value);
+	            this.setState({
+	                formData: {
+	                    scorm_data: _data,
+	                },
+	                badData: false
+	            });
+	            
+	        } catch (error){
+	            this.setState({badData: true});
+	        }
+
+	    },
 	    render: function () {
 	        var formData = this.state.formData;
 	        var url;
 	        if(this.state.module) {
 	            url = (this.state.module.indexOf('http') != -1) ? this.state.module : "__MODULES__/" + this.state.module;            
 	        }
+	        var buttons = (
+	            React.DOM.div(null, 
+	                Button({onClick: this.loadModule}, "Load"), 
+	                Button({modifier: "grey", onClick: this.reloadModule}, "Refresh")
+	            )
+	        );
+	        var button = (this.state.badData) ? Button({onClick: this.loadModule, disabled: true}, "Bad Data") : buttons;
 
 	        return (
 	            React.DOM.div({className: "SCORMCompliance"}, 
@@ -378,24 +406,20 @@ webpackJsonp([1],[
 	                    React.DOM.iframe({ref: "iframe", src: url})
 	                ), 
 	                React.DOM.div({className: "content padding2"}, 
-	                    React.DOM.p(null, "Module URL"), 
 	                    React.DOM.div({className: "row"}, 
+	                        React.DOM.label(null, "Module URL"), 
 	                        Input({name: "module", onChange: this.FormMixin_onFormChange, value: formData['module']}), 
-	                        Button({onClick: this.loadModule}, "Load"), 
-	                        Button({modifier: "grey", onClick: this.reloadModule}, "Refresh")
+	                        
+	                        React.DOM.label(null, "User Data"), 
+	                        Textarea({name: "scorm_text", onChange: this.onTextAreaChange, value: JSON.stringify(formData.scorm_text, null, 2), height: 240})
 	                    ), 
 
+	                        
 
-	                    React.DOM.h2(null, "User Data"), 
+	                    button
+	                    
 
-	                    React.DOM.label(null, "Learner Name"), 
-	                    Input({name: "cmi.learner_name", onChange: this.FormMixin_onFormChange, value: formData['cmi.learner_name']}), 
 
-	                    React.DOM.label(null, "Learner ID"), 
-	                    Input({name: "cmi.learner_id", onChange: this.FormMixin_onFormChange, value: formData['cmi.learner_id']}), 
-
-	                    React.DOM.label(null, "Completion Status"), 
-	                    Input({name: "cmi.completion_status", onChange: this.FormMixin_onFormChange, value: formData['cmi.completion_status']})
 
 	                ), 
 	                React.DOM.pre({className: "console", ref: "console"}, this.renderLog(this.state.log))
@@ -442,7 +466,7 @@ webpackJsonp([1],[
 
 	 */
 	var React = __webpack_require__(1);
-	var ClassMixin = __webpack_require__(3);
+	var ClassMixin = __webpack_require__(2);
 
 	var Button = React.createClass({
 	    displayName: 'Button',
@@ -562,7 +586,7 @@ webpackJsonp([1],[
 	 * @param   {String} example  <p> <Input value="Valid Text Input" /> <Input value="Invalid Text Input" isValid={false} /> </p>
 	 */
 	var React = __webpack_require__(1);
-	var ClassMixin = __webpack_require__(3);
+	var ClassMixin = __webpack_require__(2);
 	var Label = __webpack_require__(13);
 
 	var Input = React.createClass({
@@ -663,7 +687,7 @@ webpackJsonp([1],[
 
 	/** @jsx React.DOM */
 	var React = __webpack_require__(1);
-	var ClassMixin = __webpack_require__(3);
+	var ClassMixin = __webpack_require__(2);
 
 	var Label = React.createClass({
 	    displayName: 'Label',
@@ -682,7 +706,109 @@ webpackJsonp([1],[
 /***/ function(module, exports, __webpack_require__) {
 
 	/** @jsx React.DOM */
-	var _ = __webpack_require__(2);
+	var React = __webpack_require__(1);
+	var ClassMixin = __webpack_require__(2);
+
+	var Textarea = React.createClass({
+	    displayName: 'Textarea',
+	    mixins: [ClassMixin],
+	    propTypes: {
+	        placeholder: React.PropTypes.string,
+	        value: React.PropTypes.string,
+	        ref: React.PropTypes.string,
+	        onChange: React.PropTypes.func
+	    },
+	    // shouldComponentUpdate: function(nextProps) {
+	    //     if (!nextProps.value || nextProps.value !== this.lastValue) {
+	    //         return true;
+	    //     }
+
+	    //     return false;
+	    // },
+	    getSelection: function(el) {
+	        var start, end;
+	        if (window.getSelection) {
+	            try {
+	                start = el.selectionStart;
+	                end = el.selectionEnd;
+
+	            } catch (e) {
+	                console.log('Cant get selection text');
+	            }
+	        } 
+	        // For IE
+	        if (document.selection && document.selection.type !== "Control") {
+	            return document.selection.createRange().text;
+	        }
+
+	        return {
+	            start: start,
+	            end: end,
+	            length: end - start
+	        };
+	    },
+	    onChange:function(e){
+	        this.lastValue = this.refs.text.getDOMNode().value;
+	        if (this.props.onSelection) {
+	            this.onSelection();
+	        }
+	        if (this.props.onChange) {
+	            this.props.onChange(e, {
+	                key: this.props.name,
+	                value: this.lastValue
+	            });
+	        }
+	    },
+	    onSelection: function () {
+	        this.props.onSelection(this.getSelection(this.refs.text.getDOMNode()));
+	    },
+	    onKeyUp: function(e) {
+	        if (e.keyCode === 27) {
+	            // Stop Esc key from closing modal's
+	            e.stopPropagation();
+	            this.getDOMNode().blur();
+	        }
+
+	        this.onChange(e);
+	    },
+	    render: function() {
+	        var error;
+
+	        if (this.props.error) {
+	            error = React.DOM.div({className: "Input_error"}, this.props.error);
+	        }
+
+	        var classes = this.ClassMixin_getClass()
+	            .add((this.props.isValid === false || this.props.error), 'is-error')
+	        ;
+
+	        return (
+	            React.DOM.div(null, 
+	                this.transferPropsTo(React.DOM.textarea({
+	                    className: classes.className, 
+	                    ref: "text", 
+	                    placeholder: this.props.placeholder, 
+	                    value: this.props.value, 
+	                    onMouseUp: this.onChange, 
+	                    onChange: this.onChange, 
+	                    onKeyUp: this.onKeyUp, 
+	                    defaultValue: this.props.value
+	                    }
+	                )), 
+	                error
+	            )
+	        );
+	    }
+	});
+
+	module.exports = Textarea;
+
+/***/ },
+/* 15 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/** @jsx React.DOM */
+	var _ = __webpack_require__(3);
 
 	var FormMixin = {
 		getInitialState: function() {

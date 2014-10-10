@@ -1,0 +1,19 @@
+/* 
+
+Textarea
+
+Markup:
+<textarea class="Textarea">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Harum, consequuntur eaque culpa laudantium dicta debitis voluptates nihil ab eos deserunt assumenda numquam fugit consequatur in ipsam facilis illo dolores! Odio.</textarea>
+
+Styleguide 2.1.5 
+
+*/
+
+.Textarea {
+    @extend %ui-inputbase;
+    height: 240px;
+    line-height: 1.4;
+    resize: vertical;
+    overflow-y: auto;
+}
+

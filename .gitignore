@@ -2,5 +2,6 @@ logs
 *.log
 .grunt
 node_modules
+config.js
 .sass-cache
 __MODULES__
