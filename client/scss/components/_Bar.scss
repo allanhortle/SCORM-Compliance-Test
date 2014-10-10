@@ -1,0 +1,56 @@
+/* 
+
+Color Bar
+
+Big solid bars used as the base for buttons and navigation elements.
+
+Markup:
+<div class='Bar {$modifiers}'>Bar</div>
+
+.Bar-twoline        - Two Lines
+.Bar-sales          - Sales Color
+.Bar-parts          - Parts Color
+.Bar-service        - Service Color
+.Bar-product        - Product Color
+.Bar-management     - Management Color
+.Bar-technical      - Technical Color
+.Bar-grey           - Grey Color
+
+Styleguide 2.2.1
+
+*/
+
+%bar {
+    margin-right: -16px;
+    margin-left: -16px;
+    padding: 8px 16px;
+    height: 48px;
+    border-bottom-width: 4px;
+    border-bottom-style: solid;
+    border-bottom-color: darkColor($hero);
+    background-color: $hero;
+    color: #fff;
+    font-size: 18px;
+    line-height: 1.7em;
+
+    overflow: hidden; // Added for tech rows. Could break everything.
+
+    &:before {
+        font-size: 24px;
+        margin: 0 8px 0 4px;
+        position: relative;
+        top: -2px;
+    }
+
+    &.mod-autoHeight {
+        height: auto;
+        white-space: normal;
+    }
+
+}
+
+.Bar {
+    @extend %bar; 
+    @extend %tunic-ellipsis;
+}
+

@@ -1,0 +1,88 @@
+/* 
+
+Button
+
+Click it.
+
+Markup:
+<div class='Button {$modifiers}'>Button</div>
+
+.Button-dark            - Dark Color
+.Button-grey            - Grey Color
+.Button-green           - Green Color
+.Button-clear           - Link Version
+.Button-fullscreen      - Fullscreen Version
+.Button-large           - Large Version
+.Button-past            - Primarily for FDLP
+
+Styleguide 2.1.1 
+
+*/
+
+%ui-btnbase {
+    $ui-btnbase_color: $hero;
+    @include tunic-behave(button); 
+    @extend %bar;
+    @include tunic-ios(reset);
+    display: inline-block;
+    margin: 0;
+    height: 32px;
+    border-top: 0;
+    border-right: 0;
+    border-bottom-width: 2px;
+    border-left: 0;
+    vertical-align: top;
+    text-align: center; 
+    font-size: 13px;
+    line-height: 1em;
+
+    &:hover,
+    &:focus {
+        outline: none;
+        background-color: lighten($hero, 10);
+    }
+
+    &[disabled] {
+        @extend %disabled; 
+    }
+
+    &.l-inline {
+        margin-right: 8px;
+    }
+}
+
+%disabled {
+    border-color: grey(90) !important;
+    background-color: grey(90) !important;
+    color: grey(60) !important;
+    cursor: default;
+
+    &:hover {
+        border-color: grey(90);
+        background-color: grey(90);
+        color: grey(60);
+    }
+}
+
+%Button,
+.Button {
+    @extend %ui-btnbase;    
+}
+
+//   C O L O R I Z I N G   //
+
+@each $name, $color in (
+    'grey':     grey(80)
+
+) {
+    .Button-#{$name} {
+        background-color: $color;
+        border-bottom-color: darkColor($color);
+
+        &:hover,
+        &:focus {
+            background-color: lighten($color, 10);
+        }
+    }
+}
+

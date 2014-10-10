@@ -24,9 +24,14 @@
     "grunt-contrib-connect": "^0.8.0",
     "grunt-contrib-watch": "^0.6.1",
     "grunt-cssflow": "^0.1.5",
+    "grunt-webpack": "^1.0.8",
     "jit-grunt": "^0.8.0",
+    "jsx-loader": "^0.11.2",
     "lodash": "^2.4.1",
     "react": "^0.11.2",
-    "webpack": "^1.4.5"
+    "stampy": "git+ssh://git@git.bigdatr.com:7999/bd/stampy.git",
+    "Tunic": "git://github.com/allanhortle/tunic",
+    "webpack": "^1.4.5",
+    "webpack-dev-server": "^1.6.5"
   }
 }

@@ -1,0 +1,89 @@
+/* 
+
+Input
+
+Markup:
+<input type='text' class='Input {$modifiers}' value='Lorem ipsum dolor sit'/>
+<input type='password' class='Input {$modifiers}' value='Lorem ipsum dolor sit'/>
+
+.Input-inline       - inline variation
+
+Styleguide 2.1.4 
+
+*/
+
+
+%ui-inputbase {
+    @extend %ui-btnbase;
+    @include tunic-ios(reset);
+    font-size: 1em;
+    font-family: monospace;
+    cursor: text;
+    vertical-align: top;
+    background-color: grey(90);
+    color: grey(40);
+    border-color: grey(70);
+    text-align: left;
+    padding: 8px;
+    width: 100%;
+    margin-bottom: 16px;
+    user-select: text;
+    display: block;
+
+    // height: auto;
+    // padding: 12px;
+
+    &:focus,
+    &:hover {
+        color: grey(20);
+        outline: none;
+        background-color: grey(80);
+    }
+
+    &.is-error {
+        background-color: lighten($hero, 40);
+        border-color: lighten($hero, 30);
+    }
+}
+
+%Input-inverse,
+.Input-inverse {
+    background-color: white;
+    border-color: grey(90);
+
+    &:focus,
+    &:hover {
+        outline: none;
+        background-color: grey(94);
+    }
+}
+
+/*
+|--------------------------------------------------------------------------
+| Input Fields
+|--------------------------------------------------------------------------  
+|
+*/
+
+%Input,
+.Input {
+    @extend %ui-inputbase;
+
+    
+}
+
+.Input-inline {
+    width: auto;
+    margin: 0;
+}
+
+
+// Webkit autocomplete hacks.
+input:-webkit-autofill {
+    box-shadow: 0 0 0 50px grey(90) inset !important;
+    -webkit-text-fill-color: grey(40) !important;
+
+    &:focus {
+        box-shadow: 0 0 0 50px grey(80) inset !important;
+    }
+}

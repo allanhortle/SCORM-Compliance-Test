@@ -1,0 +1,467 @@
+/* 
+
+The Media Object
+
+Floats an image to either the left or the right and remove the text wrap from the content.
+
+Markup:
+<div class="Media {$modifiers}">
+    <div class="Media_image"><img src="http://placehold.it/64/64" /></div>
+    <div class="Media_body">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nemo, maxime, excepturi velit corporis quae placeat quia atque maiores magnam veritatis unde blanditiis sed sequi. Laborum, beatae, iste. Nulla, minima pariatur.</div>
+</div>
+
+.Media-right        - Right aligned image.
+
+*/
+/* 
+
+Tables
+
+
+*/
+/* styleguide
+name:           Ratio
+category:       Tunic => Structure
+description:    
+----
+*/
+/* 
+Margin Tools
+
+Margin combinations are prioritized by giving them first choice on semantic short names.
+Paddings then use the same names prefixed with `padding-`
+
+* `.column, .column2`
+* `.row, .row2`
+
+Markup:
+<div class="column">Column</div>
+<div class="column2">Column2</div>
+<div class="row">Row</div>
+<div class="row2">Row2</div>
+<h2 class="hug">hug</h2>
+<h2 class="hug-top">hug-top</h2>
+<h2 class="hug-bottom">hug-bottom</h2>
+
+Tunic.Structure
+*/
+/* 
+Padding Tools
+
+Frequent padding combinations
+
+* `.padding, .padding2` - collapses on small screens.
+* `.padding-hard`  - Won't collapse.
+* `.padding-mobile`  - Only appears on mobile.
+
+Markup:
+<div class="padding">Padding</div>
+<div class="padding2">Padding</div>
+<div class="padding-hard">Hard Padding</div>
+<div class="padding-mobile">Mobile Padding</div>
+
+Tunic.Structure
+*/
+.Bar {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap; }
+
+/* 
+
+Single Property Animation
+
+Uses the React.addons.CSSTransitionGroup syntax to create simple single property animations.
+
+*/
+.Button,
+.Input {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none; }
+
+.Button,
+.Input {
+  cursor: pointer; }
+
+.Button,
+.Input {
+  -webkit-appearance: none;
+  border-radius: 0; }
+
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline; }
+
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section {
+  display: block; }
+
+body {
+  line-height: 1; }
+
+ol,
+ul {
+  list-style: none; }
+
+blockquote,
+q {
+  quotes: none; }
+
+blockquote:before,
+blockquote:after,
+q:before,
+q:after {
+  content: '';
+  content: none; }
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0; }
+
+* {
+  box-sizing: border-box; }
+
+html, #app {
+  height: 100%; }
+
+body {
+  font-family: monospace;
+  height: 100%;
+  margin: 0;
+  line-height: 1.8em; }
+
+iframe {
+  border: 0;
+  height: 100%;
+  width: 100%; }
+
+p, label {
+  margin-bottom: 1rem;
+  display: block; }
+
+h2 {
+  font-size: 1.5rem;
+  line-height: 1.5em;
+  margin: 1em 0; }
+
+/* 
+
+Color Bar
+
+Big solid bars used as the base for buttons and navigation elements.
+
+Markup:
+<div class='Bar {$modifiers}'>Bar</div>
+
+.Bar-twoline        - Two Lines
+.Bar-sales          - Sales Color
+.Bar-parts          - Parts Color
+.Bar-service        - Service Color
+.Bar-product        - Product Color
+.Bar-management     - Management Color
+.Bar-technical      - Technical Color
+.Bar-grey           - Grey Color
+
+Styleguide 2.2.1
+
+*/
+.Bar,
+.Button,
+.Input {
+  margin-right: -16px;
+  margin-left: -16px;
+  padding: 8px 16px;
+  height: 48px;
+  border-bottom-width: 4px;
+  border-bottom-style: solid;
+  border-bottom-color: darkColor(#82b3e5);
+  background-color: #82b3e5;
+  color: #fff;
+  font-size: 18px;
+  line-height: 1.7em;
+  overflow: hidden; }
+  .Bar:before,
+  .Button:before,
+  .Input:before {
+    font-size: 24px;
+    margin: 0 8px 0 4px;
+    position: relative;
+    top: -2px; }
+  .mod-autoHeight.Bar,
+  .mod-autoHeight.Button,
+  .mod-autoHeight.Input {
+    height: auto;
+    white-space: normal; }
+
+/* 
+
+Button
+
+Click it.
+
+Markup:
+<div class='Button {$modifiers}'>Button</div>
+
+.Button-dark            - Dark Color
+.Button-grey            - Grey Color
+.Button-green           - Green Color
+.Button-clear           - Link Version
+.Button-fullscreen      - Fullscreen Version
+.Button-large           - Large Version
+.Button-past            - Primarily for FDLP
+
+Styleguide 2.1.1 
+
+*/
+.Button,
+.Input {
+  display: inline-block;
+  margin: 0;
+  height: 32px;
+  border-top: 0;
+  border-right: 0;
+  border-bottom-width: 2px;
+  border-left: 0;
+  vertical-align: top;
+  text-align: center;
+  font-size: 13px;
+  line-height: 1em; }
+  .Button:hover,
+  .Input:hover,
+  .Button:focus,
+  .Input:focus {
+    outline: none;
+    background-color: #accdee; }
+  .l-inline.Button,
+  .l-inline.Input {
+    margin-right: 8px; }
+
+[disabled].Button,
+[disabled].Input {
+  border-color: #e6e6e6 !important;
+  background-color: #e6e6e6 !important;
+  color: #999999 !important;
+  cursor: default; }
+  [disabled].Button:hover,
+  [disabled].Input:hover {
+    border-color: #e6e6e6;
+    background-color: #e6e6e6;
+    color: #999999; }
+
+.Button-grey {
+  background-color: #cccccc;
+  border-bottom-color: darkColor(#cccccc); }
+  .Button-grey:hover, .Button-grey:focus {
+    background-color: #e6e6e6; }
+
+/* 
+
+Input
+
+Markup:
+<input type='text' class='Input {$modifiers}' value='Lorem ipsum dolor sit'/>
+<input type='password' class='Input {$modifiers}' value='Lorem ipsum dolor sit'/>
+
+.Input-inline       - inline variation
+
+Styleguide 2.1.4 
+
+*/
+.Input {
+  font-size: 1em;
+  font-family: monospace;
+  cursor: text;
+  vertical-align: top;
+  background-color: #e6e6e6;
+  color: #666666;
+  border-color: #b3b3b3;
+  text-align: left;
+  padding: 8px;
+  width: 100%;
+  margin-bottom: 16px;
+  -webkit-user-select: text;
+     -moz-user-select: text;
+      -ms-user-select: text;
+          user-select: text;
+  display: block; }
+  .Input:focus,
+  .Input:hover {
+    color: #333333;
+    outline: none;
+    background-color: #cccccc; }
+  .is-error.Input {
+    background-color: white;
+    border-color: white; }
+
+.Input-inverse {
+  background-color: white;
+  border-color: #e6e6e6; }
+  .Input-inverse:focus,
+  .Input-inverse:hover {
+    outline: none;
+    background-color: #f0f0f0; }
+
+/*
+|--------------------------------------------------------------------------
+| Input Fields
+|--------------------------------------------------------------------------  
+|
+*/
+.Input-inline {
+  width: auto;
+  margin: 0; }
+
+input:-webkit-autofill {
+  box-shadow: 0 0 0 50px #e6e6e6 inset !important;
+  -webkit-text-fill-color: #666666 !important; }
+  input:-webkit-autofill:focus {
+    box-shadow: 0 0 0 50px #cccccc inset !important; }
+
+.column {
+  margin-left: 1rem;
+  margin-right: 1rem; }
+
+.column2 {
+  margin-left: 2rem;
+  margin-right: 2rem; }
+
+.row {
+  margin-top: 1rem;
+  margin-bottom: 1rem; }
+
+.row2 {
+  margin: 2rem 0; }
+
+.push {
+  margin-bottom: 1rem; }
+
+.push2 {
+  margin-bottom: 2rem; }
+
+.hug {
+  margin: 0; }
+
+.hug-top {
+  margin-top: 0; }
+
+.hug-bottom {
+  margin-bottom: 0; }
+
+@media (min-width: 30rem) {
+  .padding {
+    padding: 1rem; } }
+
+@media (min-width: 30rem) {
+  .padding2 {
+    padding: 2rem; } }
+
+.padding-hard {
+  padding: 1rem; }
+
+.padding-mobile {
+  padding: 1rem; }
+  @media (min-width: 30rem) {
+    .padding-mobile {
+      padding: 0; } }
+
+.padding-row {
+  padding-top: 2rem;
+  padding-bottom: 2rem; }
+
+.grid {
+  box-sizing: border-box;
+  display: table;
+  width: 100%;
+  table-layout: fixed; }
+  .grid > [class*=col--] {
+    box-sizing: border-box;
+    display: block;
+    vertical-align: top;
+    margin-bottom: 1rem; }
+    @media (min-width: 21em) {
+      .grid > [class*=col--] {
+        display: table-cell;
+        border-right: 1rem solid transparent;
+        border-left: 1rem solid transparent;
+        margin: 0; } }
+    .grid > [class*=col--]:first-child {
+      border-left: 0; }
+    .grid > [class*=col--]:last-child {
+      border-right: 0; }
+  .grid.grid-middle > [class*=col--] {
+    vertical-align: middle; }
+  .grid.grid-bottom > [class*=col--] {
+    vertical-align: bottom; }
+  .grid.grid-tight > [class*=col--] {
+    border-width: 0.5rem;
+    margin-bottom: 0.5rem; }
+  .grid.grid-flush > [class*=col--] {
+    border: 0; }
+
+@media (min-width: 21em) {
+  .col--1 {
+    width: 8.33333%; }
+
+  .col--2 {
+    width: 16.66667%; }
+
+  .col--3 {
+    width: 25%; }
+
+  .col--4 {
+    width: 33.33333%; }
+
+  .col--5 {
+    width: 41.66667%; }
+
+  .col--6 {
+    width: 50%; }
+
+  .col--7 {
+    width: 58.33333%; }
+
+  .col--8 {
+    width: 66.66667%; }
+
+  .col--9 {
+    width: 75%; }
+
+  .col--10 {
+    width: 83.33333%; }
+
+  .col--11 {
+    width: 91.66667%; }
+
+  .col--12 {
+    width: 100%; } }
+.relative {
+  position: relative; }
+
+.module {
+  position: absolute;
+  left: 40%;
+  width: 60%;
+  overflow: auto;
+  background-color: #333333; }
+
+.content {
+  position: absolute;
+  left: 0;
+  width: 40%;
+  overflow: auto; }
