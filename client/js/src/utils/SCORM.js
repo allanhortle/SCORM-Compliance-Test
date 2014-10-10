@@ -5,42 +5,47 @@ var _data = {};
 var _errorCode = 0;
 
 var API_1484_11 = {
-    Initialize: function (a) {
-        console.log("Initialize", a);
+    Initialize: function () {
+        SCORM.log(new Date());
+        SCORM.success("Initialize");
         return 'true';
     },
     Terminate: function () {
-        console.log("Terminate");
-        console.dir(storedData);
+        SCORM.success("Terminated");
+        SCORM.info("Stored Data: ");
+        SCORM.log(JSON.stringify(storedData));
+        SCORM.log('\n');
         return "true";
     },
     GetValue: function (str) {
-        if(_data[str]) {
-            console.log("GetValue(" + str + ") »", _data[str]);
-            return _data[str];            
+        var data = _data[str];
+        if(data) {
+            SCORM.info("GetValue(" + str + ")", data);
+            return data;            
         } else {
+            SCORM.error("Failed to GetValue: ", str);
             _errorCode = 301;
             return '';
         }
     },
     SetValue: function (name, value) {
-        console.log("SetValue(" + name + ", " + value + ")");
+        SCORM.log("SetValue(" + name + ", " + value + ")");
         storedData[name] = value;
         return "true";
     },
     Commit: function () {
-        console.log("Commit");
+        SCORM.success("Commit");
         return "true";
     },
     GetLastError: function () {
         return _errorCode;
     },
     GetErrorString: function () {
-        // console.log("GetErrorString");
+        // SCORM.log("GetErrorString");
         return _errorCode;
     },
     GetDiagnostic: function () {
-        console.log("GetDiagnostic");
+        SCORM.log("GetDiagnostic");
         return "true";
     }
 };
@@ -48,6 +53,21 @@ var API_1484_11 = {
 var SCORM = {
     initialize: function () {
         window['API_1484_11'] = API_1484_11;
+    },
+    log: function (message, data) {
+        SCORM.message(message, 'white', data);
+    },
+    success: function (message, data) {
+        SCORM.message('✓ ' + message, 'green', data);
+    },
+    info: function (message, data) {
+        SCORM.message(message, 'blue', data);
+    },
+    error: function (message, data) {
+        SCORM.message(message, 'red', data);
+    },
+    message: function (message, color, data) {
+        console.log(message, data);
     },
     set: function (obj) {
         _data = _.defaults(obj, _data);

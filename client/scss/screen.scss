@@ -7,8 +7,13 @@ $tunic-breakpoints:(
     tiny:   30rem
 );
 
-$hero: #82b3e5;
-$hero: #82b3e5;
+$blue: #6ca6ce;
+$orange: #e1865a;
+$red: #c55b4e;
+$green: #86c797;
+
+$hero: $blue;
+$font: monospace;
 
 @import 'base';
 

@@ -9,7 +9,7 @@ html, #app {
 }
 
 body {
-    font-family: monospace;
+    font-family: $font;
     height: 100%;
     margin: 0;
     line-height: 1.8em;
@@ -19,6 +19,7 @@ iframe {
     border: 0;
     height: 100%;
     width: 100%;
+    display: block;
 }
 
 p, label {
@@ -31,3 +32,5 @@ h2 {
     line-height: 1.5em;
     margin: 1em 0;
 }
+
+

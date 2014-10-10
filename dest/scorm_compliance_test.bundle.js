@@ -4,7 +4,7 @@ webpackJsonp([1],[
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1);
-	var SCORMComplaince = __webpack_require__(6);
+	var SCORMComplaince = __webpack_require__(8);
 	React.renderComponent(SCORMComplaince(), document.getElementById('app'));
 
 /***/ },
@@ -137,42 +137,47 @@ webpackJsonp([1],[
 	var _errorCode = 0;
 
 	var API_1484_11 = {
-	    Initialize: function (a) {
-	        console.log("Initialize", a);
+	    Initialize: function () {
+	        SCORM.log(new Date());
+	        SCORM.success("Initialize");
 	        return 'true';
 	    },
 	    Terminate: function () {
-	        console.log("Terminate");
-	        console.dir(storedData);
+	        SCORM.success("Terminated");
+	        SCORM.info("Stored Data: ");
+	        SCORM.log(JSON.stringify(storedData));
+	        SCORM.log('\n');
 	        return "true";
 	    },
 	    GetValue: function (str) {
-	        if(_data[str]) {
-	            console.log("GetValue(" + str + ") »", _data[str]);
-	            return _data[str];            
+	        var data = _data[str];
+	        if(data) {
+	            SCORM.info("GetValue(" + str + ")", data);
+	            return data;            
 	        } else {
+	            SCORM.error("Failed to GetValue: ", str);
 	            _errorCode = 301;
 	            return '';
 	        }
 	    },
 	    SetValue: function (name, value) {
-	        console.log("SetValue(" + name + ", " + value + ")");
+	        SCORM.log("SetValue(" + name + ", " + value + ")");
 	        storedData[name] = value;
 	        return "true";
 	    },
 	    Commit: function () {
-	        console.log("Commit");
+	        SCORM.success("Commit");
 	        return "true";
 	    },
 	    GetLastError: function () {
 	        return _errorCode;
 	    },
 	    GetErrorString: function () {
-	        // console.log("GetErrorString");
+	        // SCORM.log("GetErrorString");
 	        return _errorCode;
 	    },
 	    GetDiagnostic: function () {
-	        console.log("GetDiagnostic");
+	        SCORM.log("GetDiagnostic");
 	        return "true";
 	    }
 	};
@@ -180,6 +185,21 @@ webpackJsonp([1],[
 	var SCORM = {
 	    initialize: function () {
 	        window['API_1484_11'] = API_1484_11;
+	    },
+	    log: function (message, data) {
+	        SCORM.message(message, 'white', data);
+	    },
+	    success: function (message, data) {
+	        SCORM.message('✓ ' + message, 'green', data);
+	    },
+	    info: function (message, data) {
+	        SCORM.message(message, 'blue', data);
+	    },
+	    error: function (message, data) {
+	        SCORM.message(message, 'red', data);
+	    },
+	    message: function (message, color, data) {
+	        console.log(message, data);
 	    },
 	    set: function (obj) {
 	        _data = _.defaults(obj, _data);
@@ -198,15 +218,107 @@ webpackJsonp([1],[
 /* 6 */
 /***/ function(module, exports, __webpack_require__) {
 
+	var SCORMDefaults = {
+	    "cmi._version": undefined,
+	    "cmi.comments_from_learner._children": undefined,
+	    "cmi.comments_from_learner._count": undefined,
+	    "cmi.comments_from_learner.n.comment": undefined,
+	    "cmi.comments_from_learner.n.location": undefined,
+	    "cmi.comments_from_learner.n.timestamp": undefined,
+	    "cmi.comments_from_lms._children": undefined,
+	    "cmi.comments_from_lms._count": undefined,
+	    "cmi.comments_from_lms.n.comment": undefined,
+	    "cmi.comments_from_lms.n.location": undefined,
+	    "cmi.comments_from_lms.n.timestamp": undefined,
+	    "cmi.completion_status": undefined,
+	    "cmi.completion_threshold": undefined,
+	    "cmi.credit": undefined,
+	    "cmi.entry": undefined,
+	    "cmi.exit": undefined,
+	    "cmi.interactions._children": undefined,
+	    "cmi.interactions._count": undefined,
+	    "cmi.interactions.n.id": undefined,
+	    "cmi.interactions.n.type": undefined,
+	    "cmi.interactions.n.objectives._count": undefined,
+	    "cmi.interactions.n.objectives.n.id": undefined,
+	    "cmi.interactions.n.timestamp": undefined,
+	    "cmi.interactions.n.correct_responses._count": undefined,
+	    "cmi.interactions.n.correct_responses.n.pattern": undefined,
+	    "cmi.interactions.n.weighting": undefined,
+	    "cmi.interactions.n.learner_response": undefined,
+	    "cmi.interactions.n.result": undefined,
+	    "cmi.interactions.n.latency": undefined,
+	    "cmi.interactions.n.description": undefined,
+	    "cmi.launch_data": undefined,
+	    "cmi.learner_id": undefined,
+	    "cmi.learner_name": undefined,
+	    "cmi.learner_preference._children": undefined,
+	    "cmi.learner_preference.audio_level": undefined,
+	    "cmi.learner_preference.language": undefined,
+	    "cmi.learner_preference.delivery_speed": undefined,
+	    "cmi.learner_preference.audio_captioning": undefined,
+	    "cmi.location": undefined,
+	    "cmi.max_time_allowed": undefined,
+	    "cmi.mode": undefined,
+	    "cmi.objectives._children": undefined,
+	    "cmi.objectives._count": undefined,
+	    "cmi.objectives.n.id": undefined,
+	    "cmi.objectives.n.score._children": undefined,
+	    "cmi.objectives.n.score.scaled": undefined,
+	    "cmi.objectives.n.score.raw": undefined,
+	    "cmi.objectives.n.score.min": undefined,
+	    "cmi.objectives.n.score.max": undefined,
+	    "cmi.objectives.n.success_status": undefined,
+	    "cmi.objectives.n.completion_status": undefined,
+	    "cmi.objectives.n.progress_measure": undefined,
+	    "cmi.objectives.n.description": undefined,
+	    "cmi.progress_measure": undefined,
+	    "cmi.scaled_passing_score": undefined,
+	    "cmi.score._children": undefined,
+	    "cmi.score.scaled": undefined,
+	    "cmi.score.raw": undefined,
+	    "cmi.score.min": undefined,
+	    "cmi.score.max": undefined,
+	    "cmi.session_time": undefined,
+	    "cmi.success_status": undefined,
+	    "cmi.suspend_data": undefined,
+	    "cmi.time_limit_action": undefined,
+	    "cmi.total_time": undefined
+	};
+
+	module.exports = SCORMDefaults;
+
+
+/***/ },
+/* 7 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var config = {
+	    'cmi.learner_name': 'Derek Tibs',
+	    'cmi.core.student_name': 'Derek Tibs',
+	    'cmi.learner_id': '123456789',
+	    'cmi.suspend_data': 'asdasd',
+	    'cmi.completion_status': 'incomplete'
+	};
+	module.exports = config;
+
+/***/ },
+/* 8 */
+/***/ function(module, exports, __webpack_require__) {
+
 	/** @jsx React.DOM */
 	var React = __webpack_require__(1);
 	var _ = __webpack_require__(2);
-	var Grid = __webpack_require__(9);
-	var Col = __webpack_require__(8);
-	var Input = __webpack_require__(10);
-	var Button = __webpack_require__(7);
+	var Grid = __webpack_require__(11);
+	var Col = __webpack_require__(10);
+	var Input = __webpack_require__(12);
+	var Button = __webpack_require__(9);
 
 	var SCORM = __webpack_require__(5);
+	var SCORMDefaults = __webpack_require__(6);
+	var configVars = __webpack_require__(7);
+
+	var defaultVars = _.defaults(configVars, SCORMDefaults);
 
 
 
@@ -214,32 +326,41 @@ webpackJsonp([1],[
 	var SCORMCompliance = React.createClass({
 	    displayName: 'SCORMCompliance',
 	    mixins: [
-	        __webpack_require__(12)
+	        __webpack_require__(14)
 	    ],
 	    getDefaultProps: function () {
 	        return {
-	            formData: {
-	                'cmi.learner_name': 'Derek Tibs',
-	                'cmi.learner_id': '123456789',
-	                'cmi.completion_status': 'incomplete'
-	            }
+	            formData: _.defaults(defaultVars, {
+	                module: 'demo'
+	            })
 	        };
 	    },
 	    getInitialState: function () {
 	        return {
 	            module: undefined,
-	            inputModule: undefined
+	            inputModule: undefined,
+	            log: []
 	        };
 	    },
 	    componentWillMount: function () {
 	        SCORM.initialize();
+	        console.log(this.state.formData);
 	        SCORM.set(this.state.formData);
+	        SCORM.message = this.log;
 	    },
-	    onChangeInput: function (e) {
-	        this.setState({inputModule: e.target.value});
-	    }, 
+	    log: function (a,b,data) {
+	        var color = b || 'white';
+	        
+	        var _data = (data) ? " => " + data : '';
+
+	        this.setState({log: this.state.log.concat({
+	            message: a + _data,
+	            color: color
+	        })}); 
+	        this.refs.console.getDOMNode().scrollTop = this.refs.console.getDOMNode().scrollHeight;
+	    },
 	    loadModule: function () {
-	        this.setState({module: this.state.inputModule});
+	        this.setState({module: this.state.formData.module});
 	    },
 	    reloadModule: function () {
 	        this.refs.iframe.getDOMNode().contentWindow.location.reload();
@@ -253,11 +374,13 @@ webpackJsonp([1],[
 
 	        return (
 	            React.DOM.div({className: "SCORMCompliance"}, 
-	                React.DOM.iframe({ref: "iframe", className: "module", src: url}), 
+	                React.DOM.div({className: "module"}, 
+	                    React.DOM.iframe({ref: "iframe", src: url})
+	                ), 
 	                React.DOM.div({className: "content padding2"}, 
 	                    React.DOM.p(null, "Module URL"), 
 	                    React.DOM.div({className: "row"}, 
-	                        React.DOM.input({className: "Input", onChange: this.onChangeInput}), 
+	                        Input({name: "module", onChange: this.FormMixin_onFormChange, value: formData['module']}), 
 	                        Button({onClick: this.loadModule}, "Load"), 
 	                        Button({modifier: "grey", onClick: this.reloadModule}, "Refresh")
 	                    ), 
@@ -273,9 +396,16 @@ webpackJsonp([1],[
 
 	                    React.DOM.label(null, "Completion Status"), 
 	                    Input({name: "cmi.completion_status", onChange: this.FormMixin_onFormChange, value: formData['cmi.completion_status']})
-	                )
+
+	                ), 
+	                React.DOM.pre({className: "console", ref: "console"}, this.renderLog(this.state.log))
 	            )
 	        );
+	    },
+	    renderLog: function (logs) {
+	        return _.map(logs, function (log, key){
+	            return React.DOM.div({className: "log-" + log.color, key: key}, log.message);
+	        });
 	    }
 	});
 
@@ -283,7 +413,7 @@ webpackJsonp([1],[
 
 
 /***/ },
-/* 7 */
+/* 9 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/** @jsx React.DOM */
@@ -374,7 +504,7 @@ webpackJsonp([1],[
 	module.exports = Button;
 
 /***/ },
-/* 8 */
+/* 10 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/** @jsx React.DOM */
@@ -395,7 +525,7 @@ webpackJsonp([1],[
 
 
 /***/ },
-/* 9 */
+/* 11 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/** @jsx React.DOM */
@@ -422,7 +552,7 @@ webpackJsonp([1],[
 
 
 /***/ },
-/* 10 */
+/* 12 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/** @jsx React.DOM */
@@ -433,7 +563,7 @@ webpackJsonp([1],[
 	 */
 	var React = __webpack_require__(1);
 	var ClassMixin = __webpack_require__(3);
-	var Label = __webpack_require__(11);
+	var Label = __webpack_require__(13);
 
 	var Input = React.createClass({
 	    displayName: 'Input',
@@ -528,7 +658,7 @@ webpackJsonp([1],[
 	module.exports = Input;
 
 /***/ },
-/* 11 */
+/* 13 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/** @jsx React.DOM */
@@ -548,7 +678,7 @@ webpackJsonp([1],[
 
 
 /***/ },
-/* 12 */
+/* 14 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/** @jsx React.DOM */

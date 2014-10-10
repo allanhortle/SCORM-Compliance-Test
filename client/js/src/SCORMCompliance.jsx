@@ -7,6 +7,10 @@ var Input = require('stampy/components/Input');
 var Button = require('stampy/components/Button');
 
 var SCORM = require('./utils/SCORM.js');
+var SCORMDefaults = require('./utils/SCORMDefaults.js');
+var configVars = require('../../../config.js');
+
+var defaultVars = _.defaults(configVars, SCORMDefaults);
 
 
 
@@ -18,28 +22,37 @@ var SCORMCompliance = React.createClass({
     ],
     getDefaultProps: function () {
         return {
-            formData: {
-                'cmi.learner_name': 'Derek Tibs',
-                'cmi.learner_id': '123456789',
-                'cmi.completion_status': 'incomplete'
-            }
+            formData: _.defaults(defaultVars, {
+                module: 'demo'
+            })
         };
     },
     getInitialState: function () {
         return {
             module: undefined,
-            inputModule: undefined
+            inputModule: undefined,
+            log: []
         };
     },
     componentWillMount: function () {
         SCORM.initialize();
+        console.log(this.state.formData);
         SCORM.set(this.state.formData);
+        SCORM.message = this.log;
     },
-    onChangeInput: function (e) {
-        this.setState({inputModule: e.target.value});
-    }, 
+    log: function (a,b,data) {
+        var color = b || 'white';
+        
+        var _data = (data) ? " => " + data : '';
+
+        this.setState({log: this.state.log.concat({
+            message: a + _data,
+            color: color
+        })}); 
+        this.refs.console.getDOMNode().scrollTop = this.refs.console.getDOMNode().scrollHeight;
+    },
     loadModule: function () {
-        this.setState({module: this.state.inputModule});
+        this.setState({module: this.state.formData.module});
     },
     reloadModule: function () {
         this.refs.iframe.getDOMNode().contentWindow.location.reload();
@@ -53,11 +66,13 @@ var SCORMCompliance = React.createClass({
 
         return (
             <div className="SCORMCompliance">
-                <iframe ref="iframe" className="module" src={url}></iframe>
+                <div className="module" >
+                    <iframe ref="iframe" src={url}></iframe>
+                </div>
                 <div className="content padding2">
                     <p>Module URL</p>
                     <div className="row">
-                        <input className="Input" onChange={this.onChangeInput}></input>
+                        <Input name="module" onChange={this.FormMixin_onFormChange} value={formData['module']}/>
                         <Button onClick={this.loadModule}>Load</Button>
                         <Button modifier="grey" onClick={this.reloadModule}>Refresh</Button>
                     </div>
@@ -73,9 +88,16 @@ var SCORMCompliance = React.createClass({
 
                     <label>Completion Status</label>
                     <Input name="cmi.completion_status" onChange={this.FormMixin_onFormChange} value={formData['cmi.completion_status']}/>
+
                 </div>
+                <pre className="console" ref="console">{this.renderLog(this.state.log)}</pre>
             </div>
         );
+    },
+    renderLog: function (logs) {
+        return _.map(logs, function (log, key){
+            return <div className={"log-" + log.color} key={key}>{log.message}</div>;
+        });
     }
 });
 

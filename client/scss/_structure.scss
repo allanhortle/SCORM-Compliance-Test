@@ -7,18 +7,53 @@
     position: relative;
 }
 
+$left: 480px;
 
 .module {
     position: absolute;
-    left: 40%;
-    width: 60%;
+    left: $left;
+    right: 0;
     overflow: auto;
-    background-color: grey(20);
+    top: 0;
+    bottom: 0;
+    background-color: grey(90);
 }
 
 .content {
     position: absolute;
     left: 0;
-    width: 40%;
+    width: $left;
+    height: 50%;
     overflow: auto;
+}
+
+.console {
+    overflow-y: auto;
+    position: absolute;
+    bottom: 0;
+    height: 50%;
+    width: $left;
+    display: block;
+    font-family: $font;
+    background-color: grey(20);
+    color: white;
+    padding: 2rem;
+    word-wrap: break-word;
+}
+
+
+.log-green {
+    color: $green;
+}
+
+.log-blue {
+    color: $blue;
+}
+
+.log-orange {
+    color: $orange;
+}
+
+.log-red {
+    color: $red;
 }

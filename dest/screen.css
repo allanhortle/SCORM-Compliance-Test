@@ -149,7 +149,8 @@ body {
 iframe {
   border: 0;
   height: 100%;
-  width: 100%; }
+  width: 100%;
+  display: block; }
 
 p, label {
   margin-bottom: 1rem;
@@ -190,8 +191,8 @@ Styleguide 2.2.1
   height: 48px;
   border-bottom-width: 4px;
   border-bottom-style: solid;
-  border-bottom-color: darkColor(#82b3e5);
-  background-color: #82b3e5;
+  border-bottom-color: darkColor(#6ca6ce);
+  background-color: #6ca6ce;
   color: #fff;
   font-size: 18px;
   line-height: 1.7em;
@@ -247,7 +248,7 @@ Styleguide 2.1.1
   .Button:focus,
   .Input:focus {
     outline: none;
-    background-color: #accdee; }
+    background-color: #92bddb; }
   .l-inline.Button,
   .l-inline.Input {
     margin-right: 8px; }
@@ -307,7 +308,7 @@ Styleguide 2.1.4
     background-color: #cccccc; }
   .is-error.Input {
     background-color: white;
-    border-color: white; }
+    border-color: #dfebf4; }
 
 .Input-inverse {
   background-color: white;
@@ -455,13 +456,41 @@ input:-webkit-autofill {
 
 .module {
   position: absolute;
-  left: 40%;
-  width: 60%;
+  left: 480px;
+  right: 0;
   overflow: auto;
-  background-color: #333333; }
+  top: 0;
+  bottom: 0;
+  background-color: #e6e6e6; }
 
 .content {
   position: absolute;
   left: 0;
-  width: 40%;
+  width: 480px;
+  height: 50%;
   overflow: auto; }
+
+.console {
+  overflow-y: auto;
+  position: absolute;
+  bottom: 0;
+  height: 50%;
+  width: 480px;
+  display: block;
+  font-family: monospace;
+  background-color: #333333;
+  color: white;
+  padding: 2rem;
+  word-wrap: break-word; }
+
+.log-green {
+  color: #86c797; }
+
+.log-blue {
+  color: #6ca6ce; }
+
+.log-orange {
+  color: #e1865a; }
+
+.log-red {
+  color: #c55b4e; }
