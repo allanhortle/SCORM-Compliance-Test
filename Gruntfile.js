@@ -42,7 +42,7 @@ module.exports = function (grunt) {
 
         watch: {
             webpack: {
-                files: ['<%= config.js %>/**/*.js', '<%= config.js %>/**/*.jsx'],
+                files: ['<%= config.js %>/**/*.js', '<%= config.js %>/**/*.jsx', 'config.js'],
                 tasks: ['webpack']
             },
             sass: {
